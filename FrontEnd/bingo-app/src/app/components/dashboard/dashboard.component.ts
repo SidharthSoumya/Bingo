@@ -80,7 +80,7 @@ export class DashboardComponent implements OnInit {
         console.log(res);
         this.username = res.player_name;
         this.mobile = res.mobile_numbr;
-        this.imgSrc = res.img_location;
+        this.imgSrc = "data:image/jpg;base64,"+res.img_location;
       }
     }, err => {
       this.toastr.warning(err.error.msg);
@@ -98,8 +98,6 @@ export class DashboardComponent implements OnInit {
 
   public getOnlinePlayers() {
     this.spinner.show()
-    // const source = interval(5000);
-    // source.subscribe(ele => {
     this.gamePlay.getOnlinePlayerDetails().subscribe(res => {
       console.log(res);
       if(res !== null) {
@@ -111,8 +109,6 @@ export class DashboardComponent implements OnInit {
       this.spinner.hide();
       this.toastr.warning(err.error.msg);
     });
-    // });
-
   }
 
   public clickButton(rowInd, colInd) {
@@ -156,18 +152,6 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
-    // localStorage.setItem('access_token', '');
-    // this.auth.logout().subscribe(res => {
-    //   if (res !== null) {
-    //     this.toastr.success(res.message);
-    //   }
-    // }, err => {
-    //   console.log(err.error.message);
-    //   this.toastr.warning(err.error.message !== undefined ? err.error.message : err.error.msg);
-    // })
-    // localStorage.setItem('access_token', '');
   }
 
 }

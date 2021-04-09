@@ -6,6 +6,7 @@ from flask_jwt_extended import (
 )
 from response_handler import response_handler as handler
 from models.player_model import Player
+import base64
 
 
 def add_player(name, mail, mobile, password, img_location):
@@ -60,10 +61,14 @@ def logout(user_id):
 def get_player_details(player_id):
     try:
         player = session.query(Player).filter_by(id=player_id).first()
+        with open(player.profile_img, "rb") as image_file:
+            encoded_string = base64.b64encode(image_file.read())
+        print(type(encoded_string), type(encoded_string.decode('utf-8')))
+        base64Str = encoded_string.decode('utf-8')
         response = jsonify({
             'player_name' : player.name,
             'mobile_numbr' : player.mobile_number,
-            'img_location' : player.profile_img
+            'img_location' : base64Str
         })
         return response, 200
     except:
